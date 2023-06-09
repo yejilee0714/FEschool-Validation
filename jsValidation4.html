@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko-KR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="">
+        <label for="password">비밀번호</label>
+        <input type="password" id="password" required>
+        <input type="password" id = "passwordCheck" required>
+        <button>제출!</button>
+    </form>
+    <script>
+// 사용자가 입력한 비밀번호를 벨리데이션하는 폼을 만들어 봅시다. input은 비밀번호, 비밀번호 확인 두 가지가 있어야하며
+
+// 이때 만약 
+// 1. input에 아무것도 입력하지 않았거나
+// 2. 비밀번호 input과 비밀번호 확인 input의 값이 동일하지 않거나,
+// 3. 비밀번호의 패턴이 정규표현식과 일치하지 않은 경우
+
+// 에러메시지를 출력하도록 만들어보세요
+        const btn = document.querySelector('button');
+        const password = document.getElementById('password');
+        const passwordCheck = document.getElementById('passwordCheck');
+        const passwordPattern = /^(?=.*[!@#$%^&*()_+=-])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+        
+        // const pw = password.value;
+        // const pwCheck = passwordCheck.value;
+        btn.addEventListener('click', ()=>{
+            validate(password);
+            validate(passwordCheck);
+        })
+
+
+        function validate(target){
+            if (target.validity.valueMissing){
+                target.setCustomValidity("값이 없습니다.")
+            } else if(target === passwordCheck && target.value !== password.value){
+                target.setCustomValidity("잘못 입력했습니다!")
+            }else if(!passwordPattern.test(target.value)){
+                target.setCustomValidity("알맞은 값을 넣으세요!")
+            } else{
+                target.setCustomValidity("")
+            }
+        }
+    </script>
+</body>
+</html>
